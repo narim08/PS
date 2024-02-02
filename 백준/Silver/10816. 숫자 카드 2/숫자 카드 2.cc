@@ -1,5 +1,5 @@
 #include <iostream>
-#include <map>
+#include <algorithm>
 using namespace std;
 
 int main(){
@@ -10,22 +10,18 @@ int main(){
 	
 	int n, m, num;
 	cin >> n;
-	map<int, int> map;
-	
+	int* arr = new int[n];
 	for (int i = 0; i < n; i++) {
-		cin >> num;
-		auto it = map.find(num);
-		if (it==map.end()) { //처음 입력
-			map.insert({ num, 1 });
-		}
-		else { //두번째 이상 입력
-			it->second++;
-		}
+		cin >> arr[i];
 	}
+	sort(arr, arr + n);
+	
 	cin >> m;
 	for (int i = 0; i < m; i++) {
 		cin >> num;
-		cout << map[num] << ' ';
+		auto upper = upper_bound(arr, arr + n, num);
+		auto lower = lower_bound(arr, arr + n, num);
+		cout << upper - lower << ' ';
 	}
 	
 	return 0;
